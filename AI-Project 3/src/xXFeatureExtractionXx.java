@@ -61,7 +61,7 @@ public class xXFeatureExtractionXx {
 							System.out.println("Setting board pos at: "+counteri+" "+counterj+" with val " +Integer.parseInt(stateData[counterk]));
 							counterk++;
 						}
-					}		
+					}
 
 
 				} else {
@@ -81,15 +81,15 @@ public class xXFeatureExtractionXx {
 
 						System.out.print(board[counteri][counterj] +" ");
 					}
-				}	
+				}
 			}
 
 
 
 			System.out.println(board[3][2]);
-		} 
-		catch (FileNotFoundException e) {e.printStackTrace();} 
-		catch (IOException e) {e.printStackTrace();} 
+		}
+		catch (FileNotFoundException e) {e.printStackTrace();}
+		catch (IOException e) {e.printStackTrace();}
 		finally {
 			if (br != null) {
 				try {
@@ -97,9 +97,248 @@ public class xXFeatureExtractionXx {
 				} catch (IOException e) {e.printStackTrace();}
 			}
 		}
+
 	}
 
 
+
+
+    public int bottomLeftCornerControl (int[][] board) {
+    	int player = 0;
+
+    	switch (board[0][0]) {
+    		case 1:
+    			player = 1;
+    			break;
+    		case 2:
+    			player = 2;
+    			break;
+    		default:
+    			System.out.println("Inccorrect player invaded the board.");
+    			break;
+    	}
+
+    	return player;
+    }
+    public int bottomCenterCellControl (int[][] board) {
+    	int player = 0;
+
+    	switch (board[6][3]) {
+    		case 1:
+    			player = 1;
+    			break;
+    		case 2:
+    			player = 2;
+    			break;
+    		default:
+    			System.out.println("Inccorrect player invaded the board.");
+    			break;
+    	}
+
+    	return player;
+    }
+    public int centerControl (int[][] board) {
+    	int finalValue = 0;
+    	int max1 = 0, max2 = 0;
+    	int i,j;
+
+    	for (i = 6; i >= 0; i--) {
+    		for (j = 2; j < 5; j++) {
+    			if (board[i][j] == 1) {
+    				max1++;
+    			} else if (board[i][j] == 2) {
+    				max2++;
+    			}
+    		}
+    	}
+    	finalValue = max1 - max2;
+    	return finalValue;
+    }
+
+    public int disjointGroups (int[][] board) {
+    	boolean connected = false;
+    	int finalValue = 0;
+    	int i,j;
+
+    	for (i = 6; i >= 0; i--) {
+    		for (j = 0; j < 7; j++) {
+    			if (board[i][j] == 1 && !connected) {
+    				connected = true;
+    			} else if ((board[i][j] == 2 || board[i][j] == 0) && connected) {
+    				connected = false;
+    				finalValue++;
+    			}
+    		}
+    	}
+    	return finalValue;
+    }
+
+
+    /**Returns the number of diagonal connections given n and the designated player.
+	 * Search for connections in one section of the board.*/
+	int diagControl(int[][] board, int n) {
+		//check diagonally y=-x+k
+		int max1=0;
+		int max2=0;
+		int counter1 = 0, counter2 = 0;
+		int height = 7;
+		int width = 6;
+		int upper_bound=height-1+width-1-(n-1);
+
+		for(int k=n-1;k<=upper_bound;k++){
+			max1=0;
+			max2=0;
+			int x,y;
+			if(k<width)
+				x=k;
+			else
+				x=width-1;
+			y=-x+k;
+
+			while(x>=0  && y<height){
+				// System.out.println("k: "+k+", x: "+x+", y: "+y);
+				if(board[height-1-y][x]==1){
+					if(max2==n) {
+						counter2++;
+					}
+					max1++;
+					max2=0;
+				}
+				else if(board[height-1-y][x]==2){
+					if(max1==n) {
+						counter1++;
+					}
+					max1=0;
+					max2++;
+
+				}
+				else{
+					if(max1==n) {
+						counter1++;
+					} else if(max2==n) {
+						counter2++;
+					}
+					max1=0;
+					max2=0;
+				}
+				x--;
+				y++;
+			}
+			if(max1==n) {
+				counter1++;
+			} else if(max2==n) {
+				counter2++;
+			}
+		}
+		return counter1 - counter2;
+	}
+
+	/**Returns the number of diagonal connections given n and the designated player.
+	 * Search for connections in other section of the board.*/
+	int diagCounter2(int[][] board, int n) {
+		//check diagonally y=x-k
+		int max1=0;
+		int max2=0;
+		int counter1 = 0, counter2 = 0;
+		int width = 6;
+		int height = 7;
+		int upper_bound=width-1-(n-1);
+		int  lower_bound=-(height-1-(n-1));
+		// System.out.println("lower: "+lower_bound+", upper_bound: "+upper_bound);
+		for(int k=lower_bound;k<=upper_bound;k++){
+			max1=0;
+			max2=0;
+			int x,y;
+			if(k>=0)
+				x=k;
+			else
+				x=0;
+			y=x-k;
+			while(x>=0 && x<width && y<height){
+				// System.out.println("k: "+k+", x: "+x+", y: "+y);
+				if(board[height-1-y][x]==1){
+					if(max2==n) {
+						counter2++;
+					}
+					max1++;
+					max2=0;
+				}
+				else if(board[height-1-y][x]==2){
+					if(max1==n) {
+						counter1++;
+					}
+					max1=0;
+					max2++;
+
+				}
+				else{
+					if(max1==n) {
+						counter1++;
+					} else if(max2==n) {
+						counter2++;
+					}
+					max1=0;
+					max2=0;
+				}
+				x++;
+				y++;
+			}
+			if(max1==n) {
+				counter1++;
+			} else if(max2==n) {
+				counter2++;
+			}
+		}	 //end for y=x-k
+		return counter1 - counter2;
+	}
+
+	/**Counts the N horizontal connections given the designated player.
+	 * Returns the counts.*/
+	int horizCounter(int n, int[][] board) {
+		int max1;
+		int max2;
+		int counter1 = 0, counter2 = 0;
+
+		//check each row, horizontally
+		for(int i=0;i<7;i++){
+			max1=0;
+			max2=0;
+			for(int j=0;j<6;j++){
+				if(board[i][j]==1){
+					if(max2==n) {
+						counter2++;
+					}
+					max1++;
+					max2=0;
+				}
+				else if(board[i][j]==2){
+					if(max1==n) {
+						counter1++;
+					}
+					max1=0;
+					max2++;
+				} else {
+					if(max1==n) {
+						counter1++;
+					} else if(max2==n) {
+						counter2++;
+					}
+
+					max1=0;
+					max2=0;
+				}
+			}
+			if(max1==n) {
+				counter1++;
+			} else if(max2==n) {
+				counter2++;
+			}
+
+		}
+
+
+		return counter1 - counter2;
+	}
 
 
 
