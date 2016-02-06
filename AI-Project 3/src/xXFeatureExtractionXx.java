@@ -19,6 +19,7 @@ import com.opencsv.CSVWriter;
 Alonso
  */
 public class xXFeatureExtractionXx {
+	static String fileName = "res/testSet.csv";
 
 	public static void main(String[] args) throws IOException {
 
@@ -27,9 +28,8 @@ public class xXFeatureExtractionXx {
 		string[0] = "0";
 		String fileName = "res/testSet.csv";
 
-		//getFeatures();
+		getFeatures();
 
-		appendToFile(fileName);
 
 
 
@@ -39,7 +39,6 @@ public class xXFeatureExtractionXx {
 
 	public static void getFeatures(){
 
-
 		BufferedReader br = null;
 		String line = "";
 		String delimiter = ",";
@@ -47,13 +46,7 @@ public class xXFeatureExtractionXx {
 		int rows = 6;
 		int columns = 7;
 		int[][] board = new int[rows][columns];
-		board[0][0] = 6;
-		board[5][0] = 1;
-		board[5][6] = 37;
-		board[0][6] = 42;
 
-
-		//{{6,12,18,24,30,36,42},{5,11,17,23,29,35,41},{4,10,16,22,28,34,40},{3,9,15,21,27,33,39},{2,8,14,20,26,32,38},{1,7,13,19,25,31,37}};
 		Boolean hasSkipped = false;
 		int counteri = 0;
 		int counterj = 0;
@@ -89,21 +82,12 @@ public class xXFeatureExtractionXx {
 				System.out.println("");
 				System.out.println("BOARD STATE IS");
 				System.out.println("");
-
-				for(counteri = 0; counteri <rows;counteri++){
-					System.out.println("\n");
-
-
-					for(counterj = 0; counterj<columns;counterj++){
-
-						System.out.print(board[counteri][counterj] +" ");
-					}
-				}
+				appendToFile(fileName,Integer.toString(bottomLeftCornerControl(board)));
+				
 			}
 
 
 
-			System.out.println(board[3][2]);
 		}
 		catch (FileNotFoundException e) {e.printStackTrace();}
 		catch (IOException e) {e.printStackTrace();}
@@ -120,7 +104,7 @@ public class xXFeatureExtractionXx {
 
 
 
-	public int bottomLeftCornerControl (int[][] board) {
+	public static int bottomLeftCornerControl (int[][] board) {
 		int player = 0;
 
 		switch (board[0][0]) {
@@ -362,7 +346,7 @@ public class xXFeatureExtractionXx {
 
 		try
 		{
-			FileWriter writer = new FileWriter(fileName);
+			FileWriter writer = new FileWriter(fileName,true);
 
 			for(String s:data){
 				System.out.println(s);
@@ -380,25 +364,29 @@ public class xXFeatureExtractionXx {
 		} 
 	}
 
-	private static void appendToFile(String filePath)
+	private static void appendToFile(String filePath,String data)
 	{
 		BufferedReader br = null;
 		String line = "";
 		String delimiter = ",";
+		String fileName2 = "res/testSetTemp.csv";
 
 		try {
 
 			br = new BufferedReader(new FileReader(filePath));
 			int i = 0;
 			while ((line = br.readLine()) != null && line.length() > 0) {
+				
+				
 				// use comma as separator
 				//System.out.println("i = " + i);
 				String[] existingData = line.split(delimiter);
-				String[] newData = new String[existingData.length+2];
-				newData = existingData;
-				newData[newData.length-2] = "hey";
-				//System.out.println(newData[newData.length-1]);
-				saveData(filePath,newData);
+				String[] newData = new String[existingData.length+1];
+				newData = copyDat(newData,existingData);
+				System.out.println(Arrays.toString(existingData));
+				newData[newData.length-1] = data;
+				System.out.println(Arrays.toString(newData));
+				saveData(fileName2,newData);
 			}
 
 		} 
