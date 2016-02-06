@@ -2,7 +2,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
+
 
 
 /**
@@ -10,9 +20,16 @@ Alonso
  */
 public class xXFeatureExtractionXx {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		getFeatures();
+
+		String[] string = new String[1];
+		string[0] = "0";
+		String fileName = "res/testSet.csv";
+
+		//getFeatures();
+
+		appendToFile(fileName);
 
 
 
@@ -103,78 +120,78 @@ public class xXFeatureExtractionXx {
 
 
 
-    public int bottomLeftCornerControl (int[][] board) {
-    	int player = 0;
+	public int bottomLeftCornerControl (int[][] board) {
+		int player = 0;
 
-    	switch (board[0][0]) {
-    		case 1:
-    			player = 1;
-    			break;
-    		case 2:
-    			player = 2;
-    			break;
-    		default:
-    			System.out.println("Inccorrect player invaded the board.");
-    			break;
-    	}
+		switch (board[0][0]) {
+		case 1:
+			player = 1;
+			break;
+		case 2:
+			player = 2;
+			break;
+		default:
+			System.out.println("Inccorrect player invaded the board.");
+			break;
+		}
 
-    	return player;
-    }
-    public int bottomCenterCellControl (int[][] board) {
-    	int player = 0;
+		return player;
+	}
+	public int bottomCenterCellControl (int[][] board) {
+		int player = 0;
 
-    	switch (board[6][3]) {
-    		case 1:
-    			player = 1;
-    			break;
-    		case 2:
-    			player = 2;
-    			break;
-    		default:
-    			System.out.println("Inccorrect player invaded the board.");
-    			break;
-    	}
+		switch (board[6][3]) {
+		case 1:
+			player = 1;
+			break;
+		case 2:
+			player = 2;
+			break;
+		default:
+			System.out.println("Inccorrect player invaded the board.");
+			break;
+		}
 
-    	return player;
-    }
-    public int centerControl (int[][] board) {
-    	int finalValue = 0;
-    	int max1 = 0, max2 = 0;
-    	int i,j;
+		return player;
+	}
+	public int centerControl (int[][] board) {
+		int finalValue = 0;
+		int max1 = 0, max2 = 0;
+		int i,j;
 
-    	for (i = 6; i >= 0; i--) {
-    		for (j = 2; j < 5; j++) {
-    			if (board[i][j] == 1) {
-    				max1++;
-    			} else if (board[i][j] == 2) {
-    				max2++;
-    			}
-    		}
-    	}
-    	finalValue = max1 - max2;
-    	return finalValue;
-    }
+		for (i = 6; i >= 0; i--) {
+			for (j = 2; j < 5; j++) {
+				if (board[i][j] == 1) {
+					max1++;
+				} else if (board[i][j] == 2) {
+					max2++;
+				}
+			}
+		}
+		finalValue = max1 - max2;
+		return finalValue;
+	}
 
-    public int disjointGroups (int[][] board) {
-    	boolean connected = false;
-    	int finalValue = 0;
-    	int i,j;
+	public int disjointGroups (int[][] board) {
+		boolean connected = false;
+		int finalValue = 0;
+		int i,j;
 
-    	for (i = 6; i >= 0; i--) {
-    		for (j = 0; j < 7; j++) {
-    			if (board[i][j] == 1 && !connected) {
-    				connected = true;
-    			} else if ((board[i][j] == 2 || board[i][j] == 0) && connected) {
-    				connected = false;
-    				finalValue++;
-    			}
-    		}
-    	}
-    	return finalValue;
-    }
+		for (i = 6; i >= 0; i--) {
+			for (j = 0; j < 7; j++) {
+				if (board[i][j] == 1 && !connected) {
+					connected = true;
+				} else if ((board[i][j] == 2 || board[i][j] == 0) && connected) {
+					connected = false;
+					finalValue++;
+				}
+			}
+		}
+		return finalValue;
+	}
 
 
-    /**Returns the number of diagonal connections given n and the designated player.
+	/**Returns the number of diagonal connections given n and the designated player.
 	 * Search for connections in one section of the board.*/
 	int diagControl(int[][] board, int n) {
 		//check diagonally y=-x+k
@@ -341,6 +358,69 @@ public class xXFeatureExtractionXx {
 	}
 
 
+	private static void saveData(String fileName,String[] data){
+
+		try
+		{
+			FileWriter writer = new FileWriter(fileName);
+
+			for(String s:data){
+				System.out.println(s);
+				writer.append(s);
+				writer.append(',');
+			}
+
+			writer.append("\n");
+			writer.flush();
+			writer.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		} 
+	}
+
+	private static void appendToFile(String filePath)
+	{
+		BufferedReader br = null;
+		String line = "";
+		String delimiter = ",";
+
+		try {
+
+			br = new BufferedReader(new FileReader(filePath));
+			int i = 0;
+			while ((line = br.readLine()) != null && line.length() > 0) {
+				// use comma as separator
+				//System.out.println("i = " + i);
+				String[] existingData = line.split(delimiter);
+				String[] newData = new String[existingData.length+2];
+				newData = existingData;
+				newData[newData.length-2] = "hey";
+				//System.out.println(newData[newData.length-1]);
+				saveData(filePath,newData);
+			}
+
+		} 
+		catch (FileNotFoundException e) {e.printStackTrace();} 
+		catch (IOException e) {e.printStackTrace();} 
+		finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {e.printStackTrace();}
+			}
+		}
+	}
+
+
+	static String[] copyDat(String[] one, String[] two){
+		for(int i = 0; i < two.length;i++){
+			one[i] = two[i];
+		}
+
+		return one;
+	}
 
 
 
