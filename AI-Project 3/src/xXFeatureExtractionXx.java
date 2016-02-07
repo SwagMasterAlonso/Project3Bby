@@ -40,46 +40,46 @@ public class xXFeatureExtractionXx {
 
 
 
-//	public static void getAllFeatures() throws IOException{
-//
-//		try
-//		{
-//			FileWriter writer = new FileWriter(fileName);
-//		//	String[] headers = {f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25,f26,f27,f28,f29,f30,f31,f32,f33,f34,f35,f36,f37,f38,f39,f40,f41,f42,winner,
-//
-//			for (int i = 0; i<edgeNodes.size();i+=2){
-//				writer.append(Integer.toString(edgeNodes.get(i).xPos));
-//				writer.append(',');
-//				writer.append(Integer.toString(edgeNodes.get(i).yPos));
-//				writer.append(',');
-//				writer.append(Integer.toString(edgeNodes.get(i+1).xPos));
-//				writer.append(',');
-//				writer.append(Integer.toString(edgeNodes.get(i+1).yPos));
-//				writer.append("\n");
-//			}
-//			writer.flush();
-//			writer.close();
-//		}
-//		catch(IOException e)
-//		{
-//			e.printStackTrace();
-//		} 
-//		
-//		
-//		
-//		
-//		for(int i = 0; i < 5;i++){
-//			getFeatures(i);
-//			File fileTestSet = new File(filePath);
-//			File file2TempSet = new File(fileName2);
-//			//file2TempSet.renameTo(fileTestSet);
-//
-//			Files.deleteIfExists(fileTestSet.toPath());
-//			file2TempSet.renameTo(new File(filePath));
-//		}
-//
-//
-//	}
+	public static void getAllFeatures() throws IOException{
+
+		try
+		{
+			FileWriter writer = new FileWriter(fileName);
+			String[] headers = {"f1","f2","f3","f4",f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25,f26,f27,f28,f29,f30,f31,f32,f33,f34,f35,f36,f37,f38,f39,f40,f41,f42,winner,"fLC","fBCC","fcc","fdg","fdc","fhc"};
+
+			for (int i = 0; i<edgeNodes.size();i+=2){
+				writer.append(Integer.toString(edgeNodes.get(i).xPos));
+				writer.append(',');
+				writer.append(Integer.toString(edgeNodes.get(i).yPos));
+				writer.append(',');
+				writer.append(Integer.toString(edgeNodes.get(i+1).xPos));
+				writer.append(',');
+				writer.append(Integer.toString(edgeNodes.get(i+1).yPos));
+				writer.append("\n");
+			}
+			writer.flush();
+			writer.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		} 
+		
+		
+		
+		
+		for(int i = 0; i < 5;i++){
+			getFeatures(i);
+			File fileTestSet = new File(filePath);
+			File file2TempSet = new File(fileName2);
+			//file2TempSet.renameTo(fileTestSet);
+
+			Files.deleteIfExists(fileTestSet.toPath());
+			file2TempSet.renameTo(new File(filePath));
+		}
+
+
+	}
 
 
 
