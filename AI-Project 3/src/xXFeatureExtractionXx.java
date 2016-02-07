@@ -38,6 +38,7 @@ public class xXFeatureExtractionXx {
 	}
 
 	public static void getFeatures(){
+		String fileName2 = "res/testSetTemp.csv";
 
 		BufferedReader br = null;
 		String line = "";
@@ -62,27 +63,38 @@ public class xXFeatureExtractionXx {
 				if(hasSkipped){
 					String[] stateData = line.split(delimiter);
 					for(counterj = 0; counterj<columns;counterj++){
-						System.out.println("\n");
 						for(counteri = rows-1; counteri >=0;counteri--){
-							System.out.print(board[counteri][counterj]);
 							//	System.out.println("Value is: "+Integer.parseInt(stateData[counterk]));
 							board[counteri][counterj] = Integer.parseInt(stateData[counterk]);
 							//	System.out.println(board[counteri][counterj]);
-							System.out.println("Setting board pos at: "+counteri+" "+counterj+" with val " +Integer.parseInt(stateData[counterk]));
 							counterk++;
 						}
 					}
+					counterk = 0;
+					System.out.println("Board State iS: ");
+					for(int i = 0; i < 6;i++){
+						System.out.println("\n");
+						for(int j = 0; j < 7;j++){
+
+							System.out.print(board[i][j]);
+						
+						}
+					}
+					
+					String[] existingData = line.split(delimiter);
+					String[] newData = new String[existingData.length+1];
+					newData = copyDat(newData,existingData);
+					System.out.println(Arrays.toString(existingData));
+					newData[newData.length-1] = Integer.toString(bottomLeftCornerControl(board));
+					System.out.println(Arrays.toString(newData));
+					saveData(fileName2,newData);
 
 
 				} else {
 					hasSkipped = true;
 				}
-
-
-				System.out.println("");
-				System.out.println("BOARD STATE IS");
-				System.out.println("");
-				appendToFile(fileName,Integer.toString(bottomLeftCornerControl(board)));
+				
+				
 				
 			}
 
@@ -105,9 +117,22 @@ public class xXFeatureExtractionXx {
 
 
 	public static int bottomLeftCornerControl (int[][] board) {
+		
+		
+		
+		
+		
+		
 		int player = 0;
-
-		switch (board[0][0]) {
+		int posNumb = board[5][0];
+		System.out.println("Pos Is "+posNumb);
+	
+		switch(posNumb){
+		case 0:
+			player = 0;
+			System.out.println("Yo man we wrong");
+			break;
+		
 		case 1:
 			player = 1;
 			break;
@@ -364,42 +389,41 @@ public class xXFeatureExtractionXx {
 		} 
 	}
 
-	private static void appendToFile(String filePath,String data)
-	{
-		BufferedReader br = null;
-		String line = "";
-		String delimiter = ",";
-		String fileName2 = "res/testSetTemp.csv";
-
-		try {
-
-			br = new BufferedReader(new FileReader(filePath));
-			int i = 0;
-			while ((line = br.readLine()) != null && line.length() > 0) {
-				
-				
-				// use comma as separator
-				//System.out.println("i = " + i);
-				String[] existingData = line.split(delimiter);
-				String[] newData = new String[existingData.length+1];
-				newData = copyDat(newData,existingData);
-				System.out.println(Arrays.toString(existingData));
-				newData[newData.length-1] = data;
-				System.out.println(Arrays.toString(newData));
-				saveData(fileName2,newData);
-			}
-
-		} 
-		catch (FileNotFoundException e) {e.printStackTrace();} 
-		catch (IOException e) {e.printStackTrace();} 
-		finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {e.printStackTrace();}
-			}
-		}
-	}
+//	private static void appendToFile(String filePath,String data)
+//	{
+//		BufferedReader br = null;
+//		String line = "";
+//		String delimiter = ",";
+//
+//		try {
+//
+//			br = new BufferedReader(new FileReader(filePath));
+//			int i = 0;
+//			while ((line = br.readLine()) != null && line.length() > 0) {
+//
+//
+//				// use comma as separator
+//				//System.out.println("i = " + i);
+//				String[] existingData = line.split(delimiter);
+//				String[] newData = new String[existingData.length+1];
+//				newData = copyDat(newData,existingData);
+//				System.out.println(Arrays.toString(existingData));
+//				newData[newData.length-1] = data;
+//				System.out.println(Arrays.toString(newData));
+//				saveData(fileName2,newData);
+//			}
+//
+//		} 
+//		catch (FileNotFoundException e) {e.printStackTrace();} 
+//		catch (IOException e) {e.printStackTrace();} 
+//		finally {
+//			if (br != null) {
+//				try {
+//					br.close();
+//				} catch (IOException e) {e.printStackTrace();}
+//			}
+//		}
+//	}
 
 
 	static String[] copyDat(String[] one, String[] two){
