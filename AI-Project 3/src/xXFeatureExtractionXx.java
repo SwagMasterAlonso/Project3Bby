@@ -79,10 +79,10 @@ public class xXFeatureExtractionXx {
 						for(int j = 0; j < 7;j++){
 
 							System.out.print(board[i][j]);
-						
+
 						}
 					}
-					
+
 					String[] existingData = line.split(delimiter);
 					String[] newData = new String[existingData.length+1];
 					newData = copyDat(newData,existingData);
@@ -92,14 +92,14 @@ public class xXFeatureExtractionXx {
 					saveData(fileName2,newData);
 					File fileTestSet = new File(filePath);
 					File file3 = new File(filePath2);					//filePath = testSet
-					//fileName2 is temp					
+					//fileName2 is temp
 				}
-				
-				
-				
+
+
+
 			}
-			
-			
+
+
 
 
 
@@ -125,22 +125,16 @@ public class xXFeatureExtractionXx {
 
 
 	public static int bottomLeftCornerControl (int[][] board) {
-		
-		
-		
-		
-		
-		
 		int player = 0;
 		int posNumb = board[5][0];
 		System.out.println("Pos Is "+posNumb);
-	
+
 		switch(posNumb){
 		case 0:
 			player = 0;
 			System.out.println("Yo man we wrong");
 			break;
-		
+
 		case 1:
 			player = 1;
 			break;
@@ -157,16 +151,18 @@ public class xXFeatureExtractionXx {
 	public int bottomCenterCellControl (int[][] board) {
 		int player = 0;
 
-		switch (board[6][3]) {
-		case 1:
-			player = 1;
-			break;
-		case 2:
-			player = 2;
-			break;
-		default:
-			System.out.println("Inccorrect player invaded the board.");
-			break;
+		switch (board[5][3]) {
+			case 0:
+				break;
+			case 1:
+				player = 1;
+				break;
+			case 2:
+				player = 2;
+				break;
+			default:
+				System.out.println("Inccorrect player invaded the board.");
+				break;
 		}
 
 		return player;
@@ -176,7 +172,7 @@ public class xXFeatureExtractionXx {
 		int max1 = 0, max2 = 0;
 		int i,j;
 
-		for (i = 6; i >= 0; i--) {
+		for (i = 5; i >= 0; i--) {
 			for (j = 2; j < 5; j++) {
 				if (board[i][j] == 1) {
 					max1++;
@@ -194,7 +190,7 @@ public class xXFeatureExtractionXx {
 		int finalValue = 0;
 		int i,j;
 
-		for (i = 6; i >= 0; i--) {
+		for (i = 5; i >= 0; i--) {
 			for (j = 0; j < 7; j++) {
 				if (board[i][j] == 1 && !connected) {
 					connected = true;
@@ -215,8 +211,8 @@ public class xXFeatureExtractionXx {
 		int max1=0;
 		int max2=0;
 		int counter1 = 0, counter2 = 0;
-		int height = 7;
-		int width = 6;
+		int height = 6;
+		int width = 7;
 		int upper_bound=height-1+width-1-(n-1);
 
 		for(int k=n-1;k<=upper_bound;k++){
@@ -274,8 +270,8 @@ public class xXFeatureExtractionXx {
 		int max1=0;
 		int max2=0;
 		int counter1 = 0, counter2 = 0;
-		int width = 6;
-		int height = 7;
+		int width = 7;
+		int height = 6;
 		int upper_bound=width-1-(n-1);
 		int  lower_bound=-(height-1-(n-1));
 		// System.out.println("lower: "+lower_bound+", upper_bound: "+upper_bound);
@@ -334,10 +330,10 @@ public class xXFeatureExtractionXx {
 		int counter1 = 0, counter2 = 0;
 
 		//check each row, horizontally
-		for(int i=0;i<7;i++){
+		for(int i=0;i<5;i++){
 			max1=0;
 			max2=0;
-			for(int j=0;j<6;j++){
+			for(int j=0;j<7;j++){
 				if(board[i][j]==1){
 					if(max2==n) {
 						counter2++;
@@ -394,7 +390,7 @@ public class xXFeatureExtractionXx {
 		catch(IOException e)
 		{
 			e.printStackTrace();
-		} 
+		}
 	}
 
 //	private static void appendToFile(String filePath,String data)
@@ -421,9 +417,9 @@ public class xXFeatureExtractionXx {
 //				saveData(fileName2,newData);
 //			}
 //
-//		} 
-//		catch (FileNotFoundException e) {e.printStackTrace();} 
-//		catch (IOException e) {e.printStackTrace();} 
+//		}
+//		catch (FileNotFoundException e) {e.printStackTrace();}
+//		catch (IOException e) {e.printStackTrace();}
 //		finally {
 //			if (br != null) {
 //				try {
