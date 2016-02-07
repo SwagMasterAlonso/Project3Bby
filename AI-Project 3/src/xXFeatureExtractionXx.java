@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -26,7 +27,6 @@ public class xXFeatureExtractionXx {
 
 		String[] string = new String[1];
 		string[0] = "0";
-		String fileName = "res/testSet.csv";
 
 		getFeatures();
 
@@ -37,18 +37,20 @@ public class xXFeatureExtractionXx {
 
 	}
 
-	public static void getFeatures(){
+	public static void getFeatures() throws IOException{
 		String fileName2 = "res/testSetTemp.csv";
 
 		BufferedReader br = null;
 		String line = "";
 		String delimiter = ",";
 		String filePath = "res/testSet.csv";
+		String filePath2 = "res/testSetTesterino.csv";
+
 		int rows = 6;
 		int columns = 7;
 		int[][] board = new int[rows][columns];
 
-		Boolean hasSkipped = false;
+		Boolean hasSkipped = true;
 		int counteri = 0;
 		int counterj = 0;
 		int counterk =0;
@@ -88,15 +90,16 @@ public class xXFeatureExtractionXx {
 					newData[newData.length-1] = Integer.toString(bottomLeftCornerControl(board));
 					System.out.println(Arrays.toString(newData));
 					saveData(fileName2,newData);
-
-
-				} else {
-					hasSkipped = true;
+					File fileTestSet = new File(filePath);
+					File file3 = new File(filePath2);					//filePath = testSet
+					//fileName2 is temp					
 				}
 				
 				
 				
 			}
+			
+			
 
 
 
@@ -110,7 +113,12 @@ public class xXFeatureExtractionXx {
 				} catch (IOException e) {e.printStackTrace();}
 			}
 		}
+		File fileTestSet = new File(filePath);
+		File file2TempSet = new File(fileName2);
+		//file2TempSet.renameTo(fileTestSet);
 
+		Files.deleteIfExists(fileTestSet.toPath());
+		file2TempSet.renameTo(new File(filePath));
 	}
 
 
