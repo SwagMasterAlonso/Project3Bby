@@ -20,8 +20,8 @@ import com.opencsv.CSVWriter;
 Alonso
  */
 public class xXFeatureExtractionXx {
-	static String fileName = "res/testSet.csv";
-	static String filePath = "res/testSet.csv";
+	static String fileName = "res/trainDataSet.csv";
+	static String filePath = "res/trainDataSet.csv";
 	static String fileName2 = "res/testSetTemp.csv";
 
 	public static void main(String[] args) throws IOException {
@@ -32,7 +32,7 @@ public class xXFeatureExtractionXx {
 
 
 
-		//getAllFeatures();
+		getAllFeatures();
 
 
 
@@ -42,40 +42,20 @@ public class xXFeatureExtractionXx {
 
 	public static void getAllFeatures() throws IOException{
 
-		try
-		{
-			FileWriter writer = new FileWriter(fileName);
-			String[] headers = {"f1","f2","f3","f4",f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25,f26,f27,f28,f29,f30,f31,f32,f33,f34,f35,f36,f37,f38,f39,f40,f41,f42,winner,"fLC","fBCC","fcc","fdg","fdc","fhc"};
+		
+		
+		
 
-			for (int i = 0; i<edgeNodes.size();i+=2){
-				writer.append(Integer.toString(edgeNodes.get(i).xPos));
-				writer.append(',');
-				writer.append(Integer.toString(edgeNodes.get(i).yPos));
-				writer.append(',');
-				writer.append(Integer.toString(edgeNodes.get(i+1).xPos));
-				writer.append(',');
-				writer.append(Integer.toString(edgeNodes.get(i+1).yPos));
-				writer.append("\n");
-			}
-			writer.flush();
-			writer.close();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		} 
-		
-		
-		
 		
 		for(int i = 0; i < 5;i++){
+
 			getFeatures(i);
-			File fileTestSet = new File(filePath);
+			File fileTestSet = new File(fileName);
 			File file2TempSet = new File(fileName2);
 			//file2TempSet.renameTo(fileTestSet);
 
 			Files.deleteIfExists(fileTestSet.toPath());
-			file2TempSet.renameTo(new File(filePath));
+			file2TempSet.renameTo(new File(fileName));
 		}
 
 
@@ -89,14 +69,12 @@ public class xXFeatureExtractionXx {
 		BufferedReader br = null;
 		String line = "";
 		String delimiter = ",";
-		String filePath = "res/testSet.csv";
-		String filePath2 = "res/testSetTesterino.csv";
 
 		int rows = 6;
 		int columns = 7;
 		int[][] board = new int[rows][columns];
 
-		Boolean hasSkipped = true;
+		Boolean hasSkipped = false;
 		int counteri = 0;
 		int counterj = 0;
 		int counterk =0;
@@ -119,20 +97,11 @@ public class xXFeatureExtractionXx {
 						}
 					}
 					counterk = 0;
-					System.out.println("Board State iS: ");
-					for(int i = 0; i < 6;i++){
-						System.out.println("\n");
-						for(int j = 0; j < 7;j++){
-
-							System.out.print(board[i][j]);
-
-						}
-					}
+					
 
 					String[] existingData = line.split(delimiter);
 					String[] newData = new String[existingData.length+1];
 					newData = copyDat(newData,existingData);
-					System.out.println(Arrays.toString(existingData));
 
 
 					switch(counter){
@@ -170,17 +139,31 @@ public class xXFeatureExtractionXx {
 
 
 
-					System.out.println(Arrays.toString(newData));
 					saveData(fileName2,newData);
-					File fileTestSet = new File(filePath);
-					File file3 = new File(filePath2);					//filePath = testSet
-					//fileName2 is temp					
+				
 
 
 
 
+				} else {
+					try
+					{
+						FileWriter writer = new FileWriter(fileName2);
+						String[] headers = {"f1","f2","f3","f4","f5","f6","f7","f8","f9","f10","f11","f12","f13","f14","f15","f16","f17","f18","f19","f20","f21v","f22","f23","f24","f25","f26","f27","f28","f29","f30","f31","f32","f33","f34","f35","f36","f37","f38","f39","f40","f41","f42","winner","fLC","fBCC","fcc","fdg","fdc","fhc"};
 
-
+						for(String s: headers){
+							writer.append(s);
+							writer.append(',');
+						}
+						writer.append("\n");
+						writer.flush();
+						writer.close();
+					}
+					catch(IOException e)
+					{
+						e.printStackTrace();
+					} 
+					hasSkipped = true;
 				}
 
 
@@ -228,12 +211,10 @@ public class xXFeatureExtractionXx {
 	public static int bottomLeftCornerControl (int[][] board) {
 		int player = 0;
 		int posNumb = board[5][0];
-		System.out.println("Pos Is "+posNumb);
 
 		switch(posNumb){
 		case 0:
 			player = 0;
-			System.out.println("Yo man we wrong");
 			break;
 
 		case 1:
@@ -472,7 +453,6 @@ public class xXFeatureExtractionXx {
 			FileWriter writer = new FileWriter(fileName,true);
 
 			for(String s:data){
-				System.out.println(s);
 				writer.append(s);
 				writer.append(',');
 			}
