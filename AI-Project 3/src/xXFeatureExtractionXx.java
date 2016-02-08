@@ -42,21 +42,11 @@ public class xXFeatureExtractionXx {
 
 	public static void getAllFeatures() throws IOException{
 
-		
-		
-		
-
-		
-	//	for(int i = 0; i < 6;i++){
-
-			getFeatures();
-			File fileTestSet = new File(fileName);
-			File file2TempSet = new File(fileName2);
-			//file2TempSet.renameTo(fileTestSet);
-
-			Files.deleteIfExists(fileTestSet.toPath());
-			file2TempSet.renameTo(new File(fileName));
-	//	}
+		getFeatures();
+		File fileTestSet = new File(fileName);
+		File file2TempSet = new File(fileName2);
+		Files.deleteIfExists(fileTestSet.toPath());
+		file2TempSet.renameTo(new File(fileName));
 
 
 	}
@@ -90,57 +80,26 @@ public class xXFeatureExtractionXx {
 					String[] stateData = line.split(delimiter);
 					for(counterj = 0; counterj<columns;counterj++){
 						for(counteri = rows-1; counteri >=0;counteri--){
-							//	System.out.println("Value is: "+Integer.parseInt(stateData[counterk]));
 							board[counteri][counterj] = Integer.parseInt(stateData[counterk]);
-							//	System.out.println(board[counteri][counterj]);
 							counterk++;
 						}
 					}
 					counterk = 0;
-					
+
 
 					String[] existingData = line.split(delimiter);
 					String[] newData = new String[existingData.length+6];
+
 					newData = copyDat(newData,existingData);
-
-
-				//	switch(counter){
-
-
-				//	case 0:
-						newData[newData.length-6] = Integer.toString(bottomLeftCornerControl(board));
-				//		break;
-				//	case 1:
-						newData[newData.length-5] = Integer.toString(bottomCenterCellControl(board));
-
-				//		break;
-				//	case 2:
-						newData[newData.length-4] = Integer.toString(centerControl(board));
-				//		break;
-
-				//	case 3:
-						newData[newData.length-3] = Integer.toString(disjointGroups(board));
-
-				//		break;
-				//	case 4:
-						newData[newData.length-2] = Integer.toString(diagControl(board, 3)+diagCounter2(board,3));
-
-				//		break;
-				//	case 5:
-						newData[newData.length-1] = Integer.toString(horizCounter(3,board));
-
-				//		break;
-//					default:
-//						System.out.println("Inccorrect player invaded the board.");
-//						break;
-//					}
-
-
-
-
+					newData[newData.length-6] = Integer.toString(bottomLeftCornerControl(board));
+					newData[newData.length-5] = Integer.toString(bottomCenterCellControl(board));
+					newData[newData.length-4] = Integer.toString(centerControl(board));
+					newData[newData.length-3] = Integer.toString(disjointGroups(board));
+					newData[newData.length-2] = Integer.toString(diagControl(board, 3)+diagCounter2(board,3));
+					newData[newData.length-1] = Integer.toString(horizCounter(3,board));
 
 					saveData(fileName2,newData);
-				
+
 
 
 
