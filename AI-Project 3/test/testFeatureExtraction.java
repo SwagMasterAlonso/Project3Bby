@@ -18,7 +18,7 @@ public class testFeatureExtraction {
 	@Test
 	public void testHorizontal() {
 		int i,j;
-		int[] stateData = {1,0,0,0,0,0,0,0,0,0,0,0,2,1,2,0,0,0,1,1,0,0,0,0,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+		int[] stateData = {1,0,0,0,0,1,1,1,0,0,0,0,2,1,2,0,0,0,1,1,0,0,0,0,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
 		int[][] board = this.createBoard(stateData);
 
 		for (i = 0; i < 6; i++) {

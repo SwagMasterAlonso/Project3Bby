@@ -95,8 +95,8 @@ public class xXFeatureExtractionXx {
 					newData[newData.length-5] = Integer.toString(bottomCenterCellControl(board));
 					newData[newData.length-4] = Integer.toString(centerControl(board));
 					newData[newData.length-3] = Integer.toString(disjointGroups(board));
-					newData[newData.length-2] = Integer.toString(diagControl(board, 3)+diagCounter2(board,3));
-					newData[newData.length-1] = Integer.toString(horizCounter(3,board));
+					newData[newData.length-2] = Integer.toString(diagControl(board, 3)+diagCounter2(board,3)+diagControl(board, 2)+diagCounter2(board,2));
+					newData[newData.length-1] = Integer.toString(horizCounter(3,board)+horizCounter(2, board));
 
 					saveData(fileName2,newData);
 
