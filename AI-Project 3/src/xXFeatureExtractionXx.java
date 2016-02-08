@@ -47,23 +47,23 @@ public class xXFeatureExtractionXx {
 		
 
 		
-		for(int i = 0; i < 5;i++){
+	//	for(int i = 0; i < 6;i++){
 
-			getFeatures(i);
+			getFeatures();
 			File fileTestSet = new File(fileName);
 			File file2TempSet = new File(fileName2);
 			//file2TempSet.renameTo(fileTestSet);
 
 			Files.deleteIfExists(fileTestSet.toPath());
 			file2TempSet.renameTo(new File(fileName));
-		}
+	//	}
 
 
 	}
 
 
 
-	public static void getFeatures(int counter) throws IOException{
+	public static void getFeatures() throws IOException{
 		String fileName2 = "res/testSetTemp.csv";
 
 		BufferedReader br = null;
@@ -100,40 +100,40 @@ public class xXFeatureExtractionXx {
 					
 
 					String[] existingData = line.split(delimiter);
-					String[] newData = new String[existingData.length+1];
+					String[] newData = new String[existingData.length+6];
 					newData = copyDat(newData,existingData);
 
 
-					switch(counter){
+				//	switch(counter){
 
 
-					case 0:
-						newData[newData.length-1] = Integer.toString(bottomLeftCornerControl(board));
-						break;
-					case 1:
-						newData[newData.length-1] = Integer.toString(bottomCenterCellControl(board));
+				//	case 0:
+						newData[newData.length-6] = Integer.toString(bottomLeftCornerControl(board));
+				//		break;
+				//	case 1:
+						newData[newData.length-5] = Integer.toString(bottomCenterCellControl(board));
 
-						break;
-					case 2:
-						newData[newData.length-1] = Integer.toString(centerControl(board));
-						break;
+				//		break;
+				//	case 2:
+						newData[newData.length-4] = Integer.toString(centerControl(board));
+				//		break;
 
-					case 3:
-						newData[newData.length-1] = Integer.toString(disjointGroups(board));
+				//	case 3:
+						newData[newData.length-3] = Integer.toString(disjointGroups(board));
 
-						break;
-					case 4:
-						newData[newData.length-1] = Integer.toString(diagControl(board, 3)+diagCounter2(board,3));
+				//		break;
+				//	case 4:
+						newData[newData.length-2] = Integer.toString(diagControl(board, 3)+diagCounter2(board,3));
 
-						break;
-					case 5:
+				//		break;
+				//	case 5:
 						newData[newData.length-1] = Integer.toString(horizCounter(3,board));
 
-						break;
-					default:
-						System.out.println("Inccorrect player invaded the board.");
-						break;
-					}
+				//		break;
+//					default:
+//						System.out.println("Inccorrect player invaded the board.");
+//						break;
+//					}
 
 
 
