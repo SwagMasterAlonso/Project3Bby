@@ -121,7 +121,7 @@ public class xXFeatureExtractionXx {
 					catch(IOException e)
 					{
 						e.printStackTrace();
-					} 
+					}
 					hasSkipped = true;
 				}
 
@@ -364,7 +364,7 @@ public class xXFeatureExtractionXx {
 		int counter1 = 0, counter2 = 0;
 
 		//check each row, horizontally
-		for(int i=0;i<5;i++){
+		for(int i=0;i<6;i++){
 			max1=0;
 			max2=0;
 			for(int j=0;j<7;j++){
@@ -423,7 +423,7 @@ public class xXFeatureExtractionXx {
 		catch(IOException e)
 		{
 			e.printStackTrace();
-		} 
+		}
 	}
 
 
