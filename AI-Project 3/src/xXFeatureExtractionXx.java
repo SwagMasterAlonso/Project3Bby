@@ -215,7 +215,9 @@ public class xXFeatureExtractionXx {
 				}
 			}
 		}
-
+		
+		finalValue = max1-max2;
+		System.out.println(finalValue);
 		return finalValue;
 	}
 
