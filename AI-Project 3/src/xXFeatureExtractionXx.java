@@ -1,10 +1,15 @@
+//amartinez, yychow
+//Alonso Martinez, Yao Y. Chow
+//Artificial Intelligence
+
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
+;
 
 
 
@@ -13,18 +18,29 @@ import java.nio.file.Files;
 Alonso
  */
 public class xXFeatureExtractionXx {
-	static String fileName = "res/trainDataSet.csv";
-	static String filePath = "res/trainDataSet.csv";
-	static String fileName2 = "res/testSetTemp.csv";
+	static String fileName; //string to hold the file name
+	static String filePath; //string to hold 
+	static String fileOutput; //string to hold where the output will be
+	static String newLoc; //string to hold temporary location of file being written to
 
+	
+	//main function
 	public static void main(String[] args) throws IOException {
 
+		//get command line arguments, there should only be 2
+		if(args.length==2){
+		String inputString = args[0];
+		String outputString = args[1];
+		fileName = inputString;
+		filePath = inputString;
+		fileOutput = outputString;
+		} else {
+			System.out.println("Not enough input arguments");
+			System.exit(0);
+		}
 
-		String[] string = new String[1];
-		string[0] = "0";
 
-
-
+		//calling function to get all features
 		getAllFeatures();
 
 
@@ -32,27 +48,35 @@ public class xXFeatureExtractionXx {
 	}
 
 
-
+	//extracts features, saved them to a file, and then renames the file to the output
 	public static void getAllFeatures() throws IOException{
 
-		getFeatures();
 		File fileTestSet = new File(fileName);
-		File file2TempSet = new File(fileName2);
-		Files.deleteIfExists(fileTestSet.toPath());
-		file2TempSet.renameTo(new File(fileName));
+		newLoc = fileTestSet.getParent();
+		newLoc = newLoc.replace("\\","/");
+		newLoc = newLoc+"/temp.csv";
+		getFeatures();
+		System.out.println(newLoc);
+		File file2TempSet = new File(newLoc);
+		//Files.deleteIfExists(fileTestSet.toPath());
+		file2TempSet.renameTo(new File(fileOutput));
 
-
+		System.out.println("Done. Your file is located at: "+fileOutput);
 	}
 
 
-
+	//function to read in data
 	public static void getFeatures() throws IOException{
-		String fileName2 = "res/testSetTemp.csv";
-
+		
+		//create buffered reader
 		BufferedReader br = null;
+		
+		
 		String line = "";
 		String delimiter = ",";
 
+		
+		//creating a board and reading in the CSV file
 		int rows = 6;
 		int columns = 7;
 		int[][] board = new int[rows][columns];
@@ -61,7 +85,6 @@ public class xXFeatureExtractionXx {
 		int counteri = 0;
 		int counterj = 0;
 		int counterk =0;
-		File p = new File("res/testSet.csv");
 
 		try {
 
@@ -91,7 +114,7 @@ public class xXFeatureExtractionXx {
 					newData[newData.length-2] = Integer.toString(diagControl(board, 3)+diagCounter2(board,3)+diagControl(board, 2)+diagCounter2(board,2));
 					newData[newData.length-1] = Integer.toString(horizCounter(3,board)+horizCounter(2, board));
 
-					saveData(fileName2,newData);
+					saveData(newLoc,newData);
 
 
 
@@ -100,7 +123,7 @@ public class xXFeatureExtractionXx {
 				} else {
 					try
 					{
-						FileWriter writer = new FileWriter(fileName2);
+						FileWriter writer = new FileWriter(newLoc);
 						String[] headers = {"f1","f2","f3","f4","f5","f6","f7","f8","f9","f10","f11","f12","f13","f14","f15","f16","f17","f18","f19","f20","f21v","f22","f23","f24","f25","f26","f27","f28","f29","f30","f31","f32","f33","f34","f35","f36","f37","f38","f39","f40","f41","f42","winner","fLC","fBCC","fcc","fdg","fdc","fhc"};
 
 						for(String s: headers){
@@ -141,7 +164,7 @@ public class xXFeatureExtractionXx {
 
 
 
-
+//function to return the amount of disjoint groupss
 	public static int disjointGroups (int[][] board) {
 		boolean connected = false;
 		int finalValue = 0;
@@ -160,6 +183,8 @@ public class xXFeatureExtractionXx {
 		return finalValue;
 	}
 
+	
+	//function to determine who controls the bottom left corner
 	public static int bottomLeftCornerControl (int[][] board) {
 		int player = 0;
 		int posNumb = board[5][0];
@@ -182,6 +207,8 @@ public class xXFeatureExtractionXx {
 
 		return player;
 	}
+	
+	//function to determine who controls the bottom center cell
 	public static int bottomCenterCellControl (int[][] board) {
 		int player = 0;
 
@@ -201,6 +228,8 @@ public class xXFeatureExtractionXx {
 
 		return player;
 	}
+	
+	//function to determine who controsl the center cell
 	public static int centerControl (int[][] board) {
 		int finalValue = 0;
 		int max1 = 0, max2 = 0;
@@ -217,7 +246,6 @@ public class xXFeatureExtractionXx {
 		}
 		
 		finalValue = max1-max2;
-		System.out.println(finalValue);
 		return finalValue;
 	}
 
@@ -400,6 +428,8 @@ public class xXFeatureExtractionXx {
 		return counter1 - counter2;
 	}
 
+	
+	//function saves the data to a csv file
 	private static void saveData(String fileName,String[] data){
 
 		try
@@ -424,7 +454,7 @@ public class xXFeatureExtractionXx {
 
 
 
-
+//copies the data from one string array to another
 	static String[] copyDat(String[] one, String[] two){
 		for(int i = 0; i < two.length;i++){
 			one[i] = two[i];

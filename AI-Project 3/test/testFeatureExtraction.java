@@ -21,14 +21,14 @@ public class testFeatureExtraction {
 		int[] stateData = {1,0,0,0,0,1,1,1,0,0,0,0,2,1,2,0,0,0,1,1,1,0,0,0,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
 		int[][] board = this.createBoard(stateData);
 
-		for (i = 0; i < 6; i++) {
-			System.out.println("\n");
-			for (j = 0; j < 7; j++) {
-				
-				System.out.print(" "+board[i][j]+" ");
-			}
-			
-		}
+//		for (i = 0; i < 6; i++) {
+//			System.out.println("\n");
+//			for (j = 0; j < 7; j++) {
+//				
+//				System.out.print(" "+board[i][j]+" ");
+//			}
+//			
+//		}
 		assertEquals(2, xXFeatureExtractionXx.centerControl(board));
 	}
 
